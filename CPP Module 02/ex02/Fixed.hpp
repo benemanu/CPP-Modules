@@ -41,17 +41,13 @@ class Fixed
         static  Fixed& max(Fixed &a, Fixed &b);
         static  const Fixed& min(const Fixed &a, const Fixed &b);
         static  const Fixed& max(const Fixed &a, const Fixed &b);
-        
-        friend std::ostream& operator<<(std::ostream& os, const Fixed& fixed)
-        {
-            os << fixed.toFloat();
-            return os;
-        }
 
         float toFloat(void) const;
         int toInt(void) const;        
         int getRawBits(void) const;
         void setRawBits(int const raw);
 };
+
+std::ostream& operator<<(std::ostream& os, const Fixed& fixed);
 
 #endif

@@ -1,4 +1,3 @@
-
 #include "Fixed.hpp"
 
 Fixed::Fixed()
@@ -20,16 +19,16 @@ Fixed& Fixed::operator=(const Fixed &copy)
 
 Fixed Fixed::operator+(const Fixed &copy)
 {
-    Fixed *new_fixed = new Fixed();
-    new_fixed->fixed_point_value = this->fixed_point_value + copy.fixed_point_value;
-    return *new_fixed;
+    Fixed new_fixed;
+    new_fixed.fixed_point_value = this->fixed_point_value + copy.fixed_point_value;
+    return new_fixed;
 }
 
 Fixed Fixed::operator-(const Fixed &copy)
 {
-    Fixed *new_fixed = new Fixed();
-    new_fixed->fixed_point_value = this->fixed_point_value - copy.fixed_point_value;
-    return *new_fixed;
+    Fixed new_fixed;
+    new_fixed.fixed_point_value = this->fixed_point_value - copy.fixed_point_value;
+    return new_fixed;
 }
 
 Fixed Fixed::operator*(const Fixed &copy)
@@ -39,9 +38,9 @@ Fixed Fixed::operator*(const Fixed &copy)
 
 Fixed Fixed::operator/(const Fixed &copy)
 {
-    Fixed *new_fixed = new Fixed();
-    new_fixed->fixed_point_value = this->fixed_point_value / copy.fixed_point_value;
-    return *new_fixed;
+    Fixed new_fixed;
+    new_fixed.fixed_point_value = this->fixed_point_value / copy.fixed_point_value;
+    return new_fixed;
 }
 
 Fixed Fixed::operator++()
@@ -58,18 +57,18 @@ Fixed Fixed::operator--()
 
 Fixed Fixed::operator++(int)
 {
-    Fixed *new_fixed = new Fixed();
-    new_fixed->fixed_point_value = this->fixed_point_value;
+    Fixed new_fixed;
+    new_fixed.fixed_point_value = this->fixed_point_value;
     this->fixed_point_value++;
-    return *new_fixed;
+    return new_fixed;
 }
 
 Fixed Fixed::operator--(int)
 {
-    Fixed *new_fixed = new Fixed();
-    new_fixed->fixed_point_value = this->fixed_point_value;
+    Fixed new_fixed;
+    new_fixed.fixed_point_value = this->fixed_point_value;
     this->fixed_point_value--;
-    return *new_fixed;
+    return new_fixed;
 }
 
 bool Fixed::operator>(const Fixed &copy)
@@ -165,4 +164,8 @@ const Fixed& Fixed::min(const Fixed &a, const Fixed &b)
     return b;
 }
 
-
+std::ostream& operator<<(std::ostream& os, const Fixed& fixed)
+{
+    os << fixed.toFloat();
+    return os;
+}
