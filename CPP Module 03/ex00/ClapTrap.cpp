@@ -10,6 +10,25 @@ ClapTrap::ClapTrap(std::string name)
     std::cout << this->name << " has been constructed. " << std::endl; 
 }
 
+ClapTrap::ClapTrap(const ClapTrap& copy)
+{
+    this->name = copy.name;
+    this->hp = copy.hp;
+    this->ep = copy.ep;
+    this->ad = copy.ad;
+    std::cout << this->name << " has been copied. " << std::endl; 
+}
+
+ClapTrap& ClapTrap::operator=(const ClapTrap& copy)
+{
+    this->name = copy.name;
+    this->hp = copy.hp;
+    this->ep = copy.ep;
+    this->ad = copy.ad;
+    std::cout << this->name << " has been assigned. " << std::endl; 
+    return *this;
+}
+
 ClapTrap::~ClapTrap()
 {
     std::cout << this->name << " has been destroyed" << std::endl; 

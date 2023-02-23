@@ -5,7 +5,7 @@
 
 int main( void )
 {
-    FragTrap ash( "Ash" );
+    FragTrap ash( "JIM" );
     FragTrap ash2( ash );
 
     ash.attack( "the air" );
