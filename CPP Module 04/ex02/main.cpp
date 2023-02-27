@@ -7,13 +7,18 @@
 
 int main()
 {
-
-    
     const AAnimal* j = new Dog();
     const AAnimal* i = new Cat();
 
     delete j;
     delete i;
+
+    // AAnimal test;
+
+    Dog basic;
+    {
+        Dog tmp = basic;
+    }
 
     const AAnimal* animals[4] = { new Dog(), new Dog(), new Cat(), new Cat() };
     for ( int i = 0; i < 4; i++ ) {

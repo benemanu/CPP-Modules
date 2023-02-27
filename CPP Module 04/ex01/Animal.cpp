@@ -7,6 +7,12 @@ Animal::Animal()
     std::cout << "Animal constructor called" << std::endl;
 }
 
+Animal::Animal(std::string type)
+{
+    this->type = type;
+    std::cout << this->type << " type-assignment constructor called" << std::endl;
+}
+
 Animal::Animal(const Animal &copy)
 {
     this->type = copy.type;

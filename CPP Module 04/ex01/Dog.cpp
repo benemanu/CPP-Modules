@@ -3,22 +3,27 @@
 #include "Animal.hpp"
 #include "Brain.hpp"
 
-Dog::Dog() : Animal()
+Dog::Dog() : Animal("Dog")
 {
-    this->type = "Dog";
     std::cout << "Dog constructor called" << std::endl;
     this->brain = new Brain();
+    if (!this->brain)
+        std::cout << "Memory allocation failed" << std::endl;
 }
 
 Dog::Dog(const Dog &copy) : Animal(copy)
 {
-    this->type = copy.type;
+    *this = copy;
     std::cout << "Dog copy constructor called" << std::endl;
 }
 
 Dog &Dog::operator=(const Dog &copy)
 {
-    this->type = copy.type;
+    if (this != &copy)
+    {
+        this->type = copy.type;
+        this->brain = new Brain(*copy.brain);
+    }
     std::cout << "Dog assignation operator called" << std::endl;
     return (*this);
 }
@@ -32,4 +37,6 @@ Dog::~Dog()
 void Dog::makeSound() const
 {
     std::cout << this->type << " sound" << std::endl;
+    this->brain->setIdea(0, "DogBrainIdea");
+     std::cout << this->brain->getIdea(0) << std::endl;
 }

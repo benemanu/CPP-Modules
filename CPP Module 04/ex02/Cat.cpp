@@ -4,22 +4,27 @@
 #include "Brain.hpp"
 #include "AAnimal.hpp"
 
-Cat::Cat() : AAnimal()
+Cat::Cat() : AAnimal("Cat")
 {
-    this->type = "Cat";
     std::cout << "Cat constructor called" << std::endl;
     this->brain = new Brain();
+    if (!this->brain)
+        std::cout << "Memory Allocation failed" << std::endl;
 }
 
-Cat::Cat(const Cat &copy) : AAnimal(copy)
+Cat::Cat(const Cat &copy)
 {
-    this->type = copy.type;
+   *this = copy;
     std::cout << "Cat copy constructor called" << std::endl;
 }
 
 Cat &Cat::operator=(const Cat &copy)
 {
-    this->type = copy.type;
+    if (this != &copy)
+    {
+        this->type = copy.type;
+        this->brain = new Brain(*copy.brain);
+    }
     std::cout << "Cat assignation operator called" << std::endl;
     return (*this);
 }
