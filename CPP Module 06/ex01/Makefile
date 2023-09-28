@@ -21,9 +21,10 @@ $(BUILD_DIR)/%.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -rf $(BUILD_DIR) $(TARGET)
+	rm -rf $(BUILD_DIR)
 
 fclean: clean
+	rm -rf $(TARGET)
 
 re: fclean all
 
