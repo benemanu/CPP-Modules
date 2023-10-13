@@ -9,8 +9,8 @@ std::map<std::string, double> readFile() {
     while (getline(_file, line)) {
         std::stringstream ss(line);
         std::string date, rate;
-        std::getline(ss, rate, ',');
         std::getline(ss, date, ',');
+        std::getline(ss, rate, ',');
         _data[date] = std::stod(rate);
     }
     return _data;
@@ -18,7 +18,7 @@ std::map<std::string, double> readFile() {
 
 
 
-void inputChecker(std::string filename, std::map<std::string, double> _data) {
+void inputChecker(char* filename, std::map<std::string, double> _data) {
     std::ifstream inputFile(filename);
     if (!inputFile) {
         std::cerr << "Error: The file provided can't be opened." << std::endl;
@@ -94,15 +94,11 @@ bool checkValueValid(const std::string& value) {
 }
 
 double getRate(std::string date, std::map<std::string, double> data) {
-    std::cout << date << std::endl;
     std::map<std::string, double>::iterator it = data.find(date);
-    if (it != data.end()) {
-        std::cout << it->second << std::endl;
-        return it->second;
-    }
+    if (it != data.end()) 
+        return it->second;   
     else {
         std::string dayBefore = getDayBefore(date);
-        std::cout << dayBefore << std::endl;
         if (dayBefore.compare("not valid date") == 0) {
             return 0;
         }
@@ -122,12 +118,12 @@ std::string getDayBefore(std::string& date) {
             prev_month = 12;
             prev_year = year - 1;
             if (prev_year < 2009) {
-                return "not valid date";
+                return "not a valid date";
             }
         }
         switch (prev_month) {
             case 2:
-                if (prev_year % 4 == 0 && (prev_year % 100 != 0 || prev_year % 400 == 0)) {
+                if (prev_year % 4 == 0) {
                     prev_day = 29;
                 } else {
                     prev_day = 28;

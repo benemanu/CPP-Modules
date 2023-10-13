@@ -8,7 +8,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "/nfs/homes/bhielsch/Core github/CPP-Modules/CPP Module 09/ex00/a.out",
+            "program": "${workspaceFolder}/ex00/btc",
             "args": ["input.txt"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",

@@ -6,7 +6,9 @@ int main(int argc, char **argv) {
         exit(1);
     }
     std::map<std::string, double> _data = readFile();
-    // std::cout << "Read File" << std::endl;
+    // for (const auto& pair : _data) {
+    //     std::cout << "Date: " << pair.first << ", Rate: " << pair.second << std::endl;
+    // }
     inputChecker(argv[1], _data);
     return 0;
 }

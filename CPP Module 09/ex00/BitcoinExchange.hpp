@@ -10,6 +10,9 @@
 #include <cmath>
 #include <ctime>
 #include <iomanip>
+#include <algorithm> 
+#include <cctype>
+#include <locale>
 
 class InvalidInputException : public std::exception {
 public:
@@ -19,11 +22,11 @@ public:
 };
 
 std::map<std::string, double> readFile();
-void inputChecker(std::string filename, std::map<std::string, double> _data);
+void inputChecker(char* filename, std::map<std::string, double> _data);
 double getRate(std::string date, std::map<std::string, double> data);
 std::string getDayBefore(std::string& date);
 bool checkValueValid(const std::string &value);
 bool checkDateValid(const std::string &date);
-bool findDate(std::string& date, std::map<std::string, double> data);
+std::string trim(const std::string& str);
 
 #endif
