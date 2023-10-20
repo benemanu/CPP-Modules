@@ -1,8 +1,8 @@
 #include "Bureaucrat.hpp"
 
-Bureaucrat::Bureaucrat(void): _name("default"), _grade(150){
-    	std::cout << "Bureaucrat default constructor called" << std::endl;
-    	return;
+Bureaucrat::Bureaucrat(void) : _name("default"), _grade(150) {
+    std::cout << "Bureaucrat default constructor called" << std::endl;
+    return;
 }
 
 Bureaucrat::Bureaucrat(const std::string &name, int grade) : _name(name)
@@ -56,4 +56,27 @@ void Bureaucrat::gradeOneUp(void) {
     if(_grade <= 1)
         throw GradeTooLowException();
     _grade--;
+}
+
+void	Bureaucrat::signForm(AForm &form) const {
+	try {
+		form.beSigned(*this);
+		std::cout << _name << " signs " << form.getName() << std::endl;
+	}
+	catch (const std::exception &e) {
+		std::cout << _name << " couldnt sign " << form.getName() << " because " << e.what() << std::endl;
+	}
+}
+
+void	Bureaucrat::executeForm(const AForm &form) const
+{
+	try
+	{
+		form.execute(*this);
+		std::cout << _name << " executes " << form.getName() << std::endl;
+	}
+	catch(const std::exception &e)
+	{
+		std::cout << _name << " cannot executes " << form.getName() <<  " because " << e.what() << std::endl;
+	}
 }

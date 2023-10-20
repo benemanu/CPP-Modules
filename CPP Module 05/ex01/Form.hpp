@@ -8,7 +8,7 @@ class Bureaucrat;
 class Form
 {
     private:
-        std::string const	_name;
+        std::string const	    _name;
         bool					_signed;
         int const               _gradeSign;
         int const               _gradeExecute;
@@ -21,12 +21,12 @@ class Form
 
         Form	&operator=(const Form &copy);
 
-        const std::string	getName(void) const;
-		int					getGradeSign(void) const;
-        int                 getGradeExecute(void) const;
-        bool                getIsSigned(void);
+        std::string	        getName(void) const;
+	    int			        getGradeSign(void) const;
+        int			        getGradeExecute(void) const;
+        bool		        getIsSigned(void) const;
 
-		void                beSigned(const Bureaucrat &bureaucrat);
+	    void			    beSigned(const Bureaucrat &bureaucrat);
 
         class GradeTooHighException : public std::exception
         {

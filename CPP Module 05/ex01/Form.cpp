@@ -28,14 +28,14 @@ Form &Form::operator=(const Form &form) {
 
 std::ostream	&operator<<(std::ostream &o, const Form &form)
 {
-	o << "[" << form.getName() << "]" << std::endl;
-	o << "\t" << "signed : " << form.getGradeSign() << std::endl;
+	o << "'"<<form.getName() << "'" << std::endl;
+	o << "\t" << "signed : " << (form.getIsSigned() ? "true" : "false") << std::endl;
 	o << "\t" << "grade needed to sign : " << form.getGradeSign() << std::endl;
 	o << "\t" << "grade needed to execute : " << form.getGradeExecute() << std::endl;
 	return (o);
 };
 
-const std::string Form::getName(void) const{
+std::string Form::getName(void) const{
     return _name;
 }
 
@@ -47,8 +47,10 @@ int Form::getGradeExecute(void) const{
     return _gradeExecute;
 }
 
-bool Form::getIsSigned(void) {
-    return _signed;
+bool Form::getIsSigned(void) const {
+    if (_signed)
+        return true;
+    return false;
 }
 
 void Form::beSigned(const Bureaucrat &bureaucrat) {

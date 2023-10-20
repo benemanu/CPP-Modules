@@ -12,6 +12,8 @@ void	testBasic(void)
 	bob.gradeOneUp();
 	bob.gradeOneUp();
 	std::cout << bob << std::endl;
+	std::cout << bob.getName() << std::endl;
+	std::cout << bob.getGrade() << std::endl;
 }
 
 void	testExceptionLow(void)
@@ -30,7 +32,7 @@ void	testDownGrade(void)
 	bob.gradeOneUp();
 	std::cout << bob << std::endl;
 	bob.gradeOneUp();
-    std::cout << bob << std::endl;
+    	std::cout << bob << std::endl;
 }
 
 void	testUpGrade(void)
