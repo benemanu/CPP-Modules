@@ -5,6 +5,7 @@
 #include <iostream>
 #include <ostream>
 #include <exception>
+#include <vector>
 
 template <class T> 
 class Array {
@@ -15,11 +16,13 @@ class Array {
 
     public:
 
-    Array() : _elements(), _size(0) {}
+    Array() : _elements(NULL), _size(0) {}
 
     Array(unsigned int n) {
         _size = n;
-        _elements = new T[n]{};
+        _elements = new T[n];
+        for(unsigned int i = 0; i < n; i++)
+            _elements[i] = T();
     }
 
     Array(const Array &copy) {
@@ -34,7 +37,7 @@ class Array {
         delete[]_elements;
     }
 
-    Array& operator=(std::list<T> initList) {
+    Array& operator=(const std::vector<T>& initList) {
         delete[] _elements;
         
         _size = initList.size();
@@ -44,6 +47,7 @@ class Array {
 
         return *this;
     }
+
     T &operator[](unsigned int index) {
         if (index < _size)
             return (_elements[index]);

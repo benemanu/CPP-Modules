@@ -15,7 +15,11 @@ int main(void) {
     std::cout << "Array0" << std::endl;
     try {
         Array<int> intArray0(5);
-        intArray0 = {1, 3, 2, 5, 4};
+        intArray0[0] = 1;
+        intArray0[1] = 3;
+        intArray0[2] = 2;
+        intArray0[3] = 5;
+        intArray0[4] = 4;
         intArray0.printArray();
         intArray0.size();
     }
@@ -36,10 +40,12 @@ int main(void) {
 
     std::cout << "Array2" << std::endl;
     Array<int> intArray2(intArray1);
+    int j = 0;
     try {
         intArray2.printArray();
         intArray2.size();
-        intArray2 = {42, 39, 36, 33, 30};
+        for(int i = 42; i >= 30; i-= 3)
+            intArray2[j++] = i;
         intArray2.printArray();
         intArray2.size();
         }
