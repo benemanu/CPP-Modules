@@ -1,7 +1,7 @@
 CXX = c++
-CXXFLAGS = -Wall -Werror -Wextra
+CXXFLAGS = -Wall -Werror -Wextra -std=c++98
 
-SRCS = Base.cpp main.cpp
+SRCS = main.cpp
 
 BUILD_DIR = build
 

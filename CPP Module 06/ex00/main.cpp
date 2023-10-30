@@ -1,25 +1,18 @@
 #include "ScalarConverter.hpp"
 
-int main( int ac, char ** av )
+int main( int argc, char **argv )
 {
-    if ( ac != 2 ) {
+    if ( argc != 2 ) {
         std::cout << "Usage: ./convert number" << std::endl;
         return EXIT_FAILURE;
     }
 
-    ScalarConverter c;
-
-    try
-    {
-        c.setStr( av[1] );
-        c.convert();
-
-        std::cout << c;
+    try {
+        ScalarConverter::convert(argv[1]);
     }
-    catch( const std::exception& e ) {
+    catch (const std::exception &e) {
         std::cerr << "Error: " << e.what() << std::endl;
+        return EXIT_FAILURE;
     }
-    
-
     return EXIT_SUCCESS;
 }

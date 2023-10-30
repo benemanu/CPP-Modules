@@ -1,47 +1,31 @@
-NAME		= convert
-	
-CC			= c++
-FLAGS		= -Wall -Wextra -Werror -std=c++98
-RM			= rm -rf
+CXX = c++
+CXXFLAGS = -Wall -Werror -Wextra -std=c++98 -gdwarf-4
 
-OBJDIR = build
+SRCS = main.cpp ScalarConverter.cpp
 
-FILES		= main ScalarConverter
+BUILD_DIR = build
 
-SRC			= $(FILES:=.cpp)
-OBJ			= $(addprefix $(OBJDIR)/, $(FILES:=.o))
-HEADER		= ScalarConverter.hpp
+OBJS = $(patsubst %.cpp,$(BUILD_DIR)/%.o,$(SRCS))
 
-#Colors:
-GREEN		=	\e[92;5;118m
-YELLOW		=	\e[93;5;226m
-GRAY		=	\e[33;2;37m
-RESET		=	\e[0m
-CURSIVE		=	\e[33;3m
+TARGET = convert
 
-#Debug 
-ifeq ($(DEBUG), 1)
-   OPTS = -g
-endif
+all: $(BUILD_DIR) $(TARGET)
 
-.PHONY: all clean fclean re
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
 
-all: $(NAME)
+$(TARGET): $(OBJS)
+	$(CXX) $(CXXFLAGS) $(OBJS) -o $(TARGET)
 
-$(NAME): $(OBJ) $(HEADER)
-	@$(CC) $(OBJ) $(OPTS) -o $(NAME)
-	@printf "$(_SUCCESS) $(GREEN)- Executable ready.\n$(RESET)"
-
-$(OBJDIR)/%.o: %.cpp $(HEADER)
-	@mkdir -p $(dir $@)
-	@$(CC) $(FLAGS) $(OPTS) -c $< -o $@
+$(BUILD_DIR)/%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	@$(RM) $(OBJDIR) $(OBJ)
-	@printf "$(YELLOW)    - Object files removed.$(RESET)\n"
+	rm -rf $(BUILD_DIR)
 
 fclean: clean
-	@$(RM) $(NAME)
-	@printf "$(YELLOW)    - Executable removed.$(RESET)\n"
+	rm -rf $(TARGET)
 
 re: fclean all
+
+.PHONY: all clean fclean re

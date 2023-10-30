@@ -1,13 +1,13 @@
 CXX = c++
-CXXFLAGS = -Wall -Werror -Wextra -std=c++98
+CXXFLAGS = -Wall -Werror -Wextra -g
 
-SRCS = main.cpp serialization.cpp
+SRCS = main.cpp PmergeMe.cpp
 
 BUILD_DIR = build
 
 OBJS = $(patsubst %.cpp,$(BUILD_DIR)/%.o,$(SRCS))
 
-TARGET = serialization
+TARGET = PmergeMe
 
 all: $(BUILD_DIR) $(TARGET)
 

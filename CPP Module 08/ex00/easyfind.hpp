@@ -7,28 +7,36 @@
 #include <iostream>
 #include <list>
 #include <stdexcept>
+#include <iterator>
 
-class TargetNotFoundException : public std::exception {
+class NotAnIntegerException : public std::runtime_error {
 public:
-    const char* what() const noexcept override {
-        return "Target not found in the container.";
+    NotAnIntegerException() : std::runtime_error("NotAnIntegerException") { }
+    virtual const char* what() const throw() {
+        return std::runtime_error::what();
     }
 };
 
-class NotAnIntegerException : public std::exception {
+class TargetNotFoundException : public std::runtime_error {
 public:
-    const char* what() const noexcept override {
-        return "The searched number is not an Integer";
+    TargetNotFoundException() : std::runtime_error("TargetNotFoundException") { }
+    virtual const char* what() const throw() {
+        return std::runtime_error::what();
     }
 };
+
+
 
 template <typename T>
-bool easyfind(const T& container, int find) {
-    if (find > 2147483647 && find < (-2147483648))
+typename T::size_type easyfind(const T& container, int find) {
+    if (find > 2147483647 || find < -2147483648) {
         throw NotAnIntegerException();
-    auto result = std::find(container.begin(), container.end(), find);
-    if (result != container.end()) {
-        return true;
+    }
+    
+    typename T::const_iterator it = std::find(container.begin(), container.end(), find);
+
+    if (it != container.end()) {
+        return std::distance(container.begin(), it);
     } else {
         throw TargetNotFoundException();
     }

@@ -1,19 +1,15 @@
 #include "serialization.hpp"
 
 int main() {
-    Data* myData = new Data;
-    myData->age = 20;
-    myData->name = "Benedikt";
-
-    Serializer serializer;
-    uintptr_t serializedData = serializer.serialize(myData);
-    Data* deserializedData = serializer.deserialize(serializedData);
-
-    std::cout << typeid(serializedData).name() << std::endl;
-    std::cout << typeid(myData->age).name() << std::endl;
-    std::cout << typeid(deserializedData->age).name() << std::endl;
-
-    delete myData;
-
+    Data data;
+	data.name = "Benedikt";
+	data.age = 20;
+	uintptr_t raw = Serializer::serialize(&data);
+	Data *ptr = Serializer::deserialize(raw);
+	std::cout << ptr->name << std::endl;
+	std::cout << ptr->age << std::endl;
+	std ::cout << "raw: 0x" << std::hex << raw << std::endl;
+	std::cout << "ptr: " << ptr << std::endl;
+    
     return 0;
 }

@@ -1,11 +1,11 @@
 #include "iter.hpp"
 
-int main( void ) {
+int main() {
+    int array[] = {1, 2, 3, 4, 3, 2, 1};
+    iter<int, int>(array, 7, printElement<int>);
 
-	int array[] = {1, 2, 3, 4, 3, 2, 1};
-	::iter<int>(array, 7, ::print);
+    bool str[] = {true, false, true};
+    iter<bool, bool>(str, 3, printElement<bool>);
 
-	std::string str = "Hello World!";
-	iter<const char>(str.c_str(), str.length(), ::print);
-
+    return 0;
 }

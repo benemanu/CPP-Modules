@@ -26,7 +26,7 @@ enum FormName {
 AForm *Intern::makeForm(const std::string &formName, const std::string &formTarget) {
     
     std::string formNames[3] = {"robotomy request", "shrubbery creation", "presidential pardon"};
-    int whatCase = 97;
+    int whatCase = 4;
     for(int i = 0; i < 3; i++) {
         if (formName == formNames[i])
             whatCase = i;

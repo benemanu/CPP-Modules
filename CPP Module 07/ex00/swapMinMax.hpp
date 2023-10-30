@@ -1,7 +1,8 @@
-
-
 #ifndef SWAPMINMAX_HPP
 #define SWAPMINMAX_HPP
+
+#include <ostream>
+#include <iostream>
 
 template<class T> void swap(T& a, T& b) {
     T temp = a;

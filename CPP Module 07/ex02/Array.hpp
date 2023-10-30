@@ -3,6 +3,8 @@
 
 #include <stdexcept>
 #include <iostream>
+#include <ostream>
+#include <exception>
 
 template <class T> 
 class Array {
@@ -13,7 +15,7 @@ class Array {
 
     public:
 
-    Array() : _elements(nullptr), _size(0) {}
+    Array() : _elements(), _size(0) {}
 
     Array(unsigned int n) {
         _size = n;
@@ -32,7 +34,7 @@ class Array {
         delete[]_elements;
     }
 
-    Array& operator=(std::initializer_list<T> initList) {
+    Array& operator=(std::list<T> initList) {
         delete[] _elements;
         
         _size = initList.size();

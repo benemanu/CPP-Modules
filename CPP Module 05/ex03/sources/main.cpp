@@ -14,19 +14,19 @@ int	main(void)
 
 	Bureaucrat me("Lucie", 1);
 	Intern someRandomIntern;
-	AForm* rrf;
+	AForm* ppf;
 	try {
-		rrf = someRandomIntern.makeForm("presidential pardon", "Bender");
-		std::cout << *rrf << std::endl;
-		rrf->beSigned(me);
-		rrf->execute(me);
-		std::cout << *rrf << std::endl;
+		ppf = someRandomIntern.makeForm("presidential pardon", "Bender");
+		std::cout << *ppf << std::endl;
+		ppf->beSigned(me);
+		ppf->execute(me);
+		std::cout << *ppf << std::endl;
 	}
 	catch (std::exception &e)
 	{
 		std::cerr << e.what() << std::endl;
 	}
-	delete rrf;
+	delete ppf;
 
 	std::cout << std::endl;
 	std::cout << "Test 2:" << std::endl;
@@ -34,19 +34,19 @@ int	main(void)
 
 	Bureaucrat me1("Lucie", 138);
 	Intern someRandomIntern1;
-	AForm* rrff;
+	AForm* scf;
 	try {
-		rrff = someRandomIntern1.makeForm("shrubbery creation", "Bender");
-		std::cout << *rrff << std::endl;
-		rrff->beSigned(me1);
-		rrff->execute(me1);
-		std::cout << *rrff << std::endl;
+		scf = someRandomIntern1.makeForm("shrubbery creation", "Bender");
+		std::cout << *scf << std::endl;
+		scf->beSigned(me1);
+		scf->execute(me1);
+		std::cout << *scf << std::endl;
 	}
 	catch (std::exception &e)
 	{
 		std::cerr << e.what() << std::endl;
 	}
-	delete rrff;
+	delete scf;
 
 	std::cout << std::endl;
 	std::cout << "Test 3:" << std::endl;
@@ -54,14 +54,14 @@ int	main(void)
 
 	Bureaucrat me2("Lucie", 131);
 	Intern someRandomIntern2;
-	AForm* rrrff;
+	AForm* scf1;
 	try {
-		rrrff = someRandomIntern2.makeForm("shrubberycreation", "Target");
-		std::cout << *rrrff << std::endl;
-		rrrff->beSigned(me2);
-		rrrff->execute(me2);
-		std::cout << *rrrff << std::endl;
-		delete rrrff;
+		scf1 = someRandomIntern2.makeForm("shrubberycreation", "Target");
+		std::cout << *scf1 << std::endl;
+		scf1->beSigned(me2);
+		scf1->execute(me2);
+		std::cout << *scf1 << std::endl;
+		delete scf1;
 	}
 	catch (std::exception &e)
 	{
@@ -74,19 +74,19 @@ int	main(void)
 
 	Bureaucrat me3("Lucie", 1);
 	Intern someRandomIntern3;
-	AForm* rrrfff;
+	AForm* rrf;
 	try {
-		rrrfff = someRandomIntern3.makeForm("robotomy request", "Bender");
-		std::cout << *rrrfff << std::endl;
-		rrrfff->beSigned(me3);
-		rrrfff->execute(me3);
-		std::cout << *rrrfff << std::endl;
+		rrf = someRandomIntern3.makeForm("robotomy request", "Bender");
+		std::cout << *rrf << std::endl;
+		rrf->beSigned(me3);
+		rrf->execute(me3);
+		std::cout << *rrf << std::endl;
 	}
 	catch (std::exception &e)
 	{
 		std::cerr << e.what() << std::endl;
 	}
-	delete rrrfff;
+	delete rrf;
 
 	return (0);
 }

@@ -2,6 +2,9 @@
 #define SERIALIZATION_HPP
 
 #include <iostream>
+#include <string>
+#include <typeinfo>
+#include <stdint.h>
 
 struct Data {
     int age;
@@ -9,20 +12,17 @@ struct Data {
 };
 
 class Serializer {
-public:
-    Serializer();
-    Serializer(const Serializer& other);
-    Serializer& operator=(const Serializer& other);
-    ~Serializer();
-
-    Data* getData() const;
-    void setData(Data* ptr);
-
-    uintptr_t serialize(Data* ptr) const;
-    Data* deserialize(uintptr_t raw) const;
-
 private:
     Data* data;
+    Serializer();
+
+public:
+    Serializer(const Serializer& copy);
+    Serializer& operator=(const Serializer& assign);
+    ~Serializer();
+
+    static unsigned long serialize(Data* ptr);
+    static Data* deserialize(unsigned long raw);
 };
 
 #endif

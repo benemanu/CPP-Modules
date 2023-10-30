@@ -38,7 +38,7 @@ void Span::addNumbers(const std::vector<int>& values) {
     size_t spaceLeft = this->_space - this->_size;
     if (spaceLeft > 0) {
     std::vector<int> nonConstValues(values.begin(), values.end());
-    auto it = nonConstValues.begin();
+    std::iterator it = nonConstValues.begin();
     while (spaceLeft > 0 && it != nonConstValues.end()) {
         this->_vector.push_back(*it);
         this->_size++;

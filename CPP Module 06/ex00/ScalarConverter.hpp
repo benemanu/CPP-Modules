@@ -5,6 +5,8 @@
 #include <string>
 #include <fstream>
 #include <limits>
+#include <cstdlib>
+#include <sstream>
 
 enum e_type {
     NONE,
@@ -17,55 +19,29 @@ enum e_type {
 
 class ScalarConverter {
     private:
-        char        _char;
-        int         _int;
-        float       _float;
-        double      _double;
-        bool        _impossible;
-        std::string _str;
-        e_type      _type;
-
+            ScalarConverter();
+            ScalarConverter(const ScalarConverter &copy);
+            ScalarConverter &operator=(const ScalarConverter &assign);
+            static int getType(std::string input);
+            static void printAll(char *_char, int *_int, double *_double, float *_float, std::string input, int _type);
+           
 
     public:
-        ScalarConverter();
-        ScalarConverter(const ScalarConverter &copy);
-        ~ScalarConverter();
-        ScalarConverter& operator=(const ScalarConverter &assignOperator);
+            ~ScalarConverter();
+            static void convert(std::string input);
+            static bool isImpossible(std::string _str, int _type);
+            static bool isChar(std::string _str);
+            static bool isInt(std::string _str);
+            static bool isDouble(std::string _str);
+            static bool isFloat(std::string _str);
+            static bool isLiterals(std::string _str);
+            static bool isLiteralsDouble(std::string _str);
+            static bool isLiteralsFloat(std::string _str);
+            static void printDouble(double _double, std::string _str, int _type);
+            static void printFloat(float _float, std::string _str, int _type);
+            static void printChar(char _char, std::string _str);
+            static void printInt(int _int, std::string _str);
 
-        char getChar() const;
-        void setChar(char c);
-
-        int getInt() const;
-        void setInt(int i);
-
-        double getDouble() const;
-        void setDouble(double d);
-
-        float getFloat() const;
-        void setFloat(float f); 
-
-        e_type getType() const;
-
-        bool isChar() const;
-        bool isInt() const;
-        bool isDouble() const;
-        bool isFloat() const;
-        bool isLiterals() const;
-        bool isImpossible();
-
-        void setStr(std::string str);
-        void setType();
-        void convert ();
-        void printChar() const;
-        void printInt() const;
-        void printDouble() const;
-        void printFloat() const;
-
-        std::string getStr() const;
-
-        class ConverterException : public std::exception {
-        virtual const char* what() const throw() { return "Unknown type"; }
-    };
 };
 
 std::ostream& operator<<( std::ostream& out, const ScalarConverter& rhs );
