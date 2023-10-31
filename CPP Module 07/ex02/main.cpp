@@ -10,7 +10,7 @@ int main(void) {
     }
     catch (std::exception &e) {
         std::cerr << e.what() << std::endl;
-    } 
+    }
 
     std::cout << "Array0" << std::endl;
     try {
@@ -30,7 +30,7 @@ int main(void) {
     std::cout << "Array1" << std::endl;
     Array<int> intArray1(5);
     try {
-        intArray1[1] = 3;
+        intArray1[2] = 3;
         intArray1.printArray();
         intArray1.size();
     }

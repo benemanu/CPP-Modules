@@ -69,8 +69,8 @@ class Array {
     }
 
     void size() {
-        int i = 0;
-        while(this->_elements[i])
+        unsigned int i = 0;
+        while(i < this->_size)
             i++;
         std::cout << i << std::endl;
     }
