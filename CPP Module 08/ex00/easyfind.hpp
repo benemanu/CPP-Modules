@@ -34,7 +34,6 @@ typename T::size_type easyfind(const T& container, int find) {
     }
     
     typename T::const_iterator it = std::find(container.begin(), container.end(), find);
-
     if (it != container.end()) {
         return std::distance(container.begin(), it);
     } else {

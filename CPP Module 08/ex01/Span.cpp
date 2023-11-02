@@ -7,22 +7,19 @@ Span::Span(unsigned int n) {
     _size = 0;
 }
 
-Span::Span(const Span &copy) {
-    this->_vector = copy._vector;
-    this->_size = copy._size;
-    *this = copy;
+Span::Span(const Span& copy) : _size(copy._size), _space(copy._space) {
+    _vector = copy._vector;
 }
 
 Span::~Span() {}
 
-Span& Span::operator=(const Span& assign) 
-{
-	if (this == &assign) 
-        return *this;
-	this->_size = assign._size;
-	this->_vector = assign._vector;
-
-	return *this;
+Span& Span::operator=(const Span& assign) {
+    if (this != &assign) {
+        _size = assign._size;
+        _space = assign._space;
+        _vector = assign._vector;
+    }
+    return *this;
 }
 
 void Span::addNumber(int number) {
@@ -38,7 +35,7 @@ void Span::addNumbers(const std::vector<int>& values) {
     size_t spaceLeft = this->_space - this->_size;
     if (spaceLeft > 0) {
     std::vector<int> nonConstValues(values.begin(), values.end());
-    std::iterator it = nonConstValues.begin();
+    std::vector<int>::iterator it = nonConstValues.begin();
     while (spaceLeft > 0 && it != nonConstValues.end()) {
         this->_vector.push_back(*it);
         this->_size++;
@@ -86,17 +83,14 @@ unsigned int Span::longestSpan() {
     
 }
 
-std::vector<int> generateRandomIntegers(int n, int min, int max) {
-    std::vector<int> randomNumbers; 
 
-    std::random_device rd;
-    std::mt19937 mt(rd());
-    std::uniform_int_distribution<int> dist(min, max);
+std::vector<int> generateRandomIntegers(int n, int min, int max) {
+    std::vector<int> randomNumbers;
+    srand(static_cast<unsigned>(std::time(0)));  // Seed the random number generator
 
     for (int i = 0; i < n; ++i) {
-        int randomValue = dist(mt);
+        int randomValue = min + (std::rand() % (max - min + 1));
         randomNumbers.push_back(randomValue);
     }
-
     return randomNumbers;
 }
