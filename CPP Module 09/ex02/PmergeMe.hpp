@@ -2,17 +2,22 @@
 #define PMERGEME_HPP
 
 #include <iostream>
-#include <stack>
-#include <exception>
-#include <iostream>
-#include <stdexcept>
-#include <sstream>
 #include <vector>
+#include <deque>
 #include <list>
+#include <algorithm>
+#include <sys/time.h>
+#include <unistd.h>
+#include <sstream>
 
-void checkInputTwoArgs(std::string input);
-void checkInputMoreArgs(std::string input);
-void mergeVector(std::vector<int>& _vector, int start, int mid, int end);
-void sortVector(std::vector<int>& _vector, int start, int end);
-std::vector<int> inputToVector(std::string input);
+void checkInput(int argc, char **argv, bool flag, std::string choice, int tmp);
+int checkInputValid(const char *input);
+
+class InvalidInputException : public std::runtime_error {
+public:
+    InvalidInputException() : std::runtime_error("error: Invalid Input") { }
+    virtual const char* what() const throw() {
+        return std::runtime_error::what();
+    }
+};
 #endif

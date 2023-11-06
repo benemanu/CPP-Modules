@@ -1,77 +1,97 @@
 #include "PmergeMe.hpp"
 
-void checkInputTwoArgs(std::string input) {
-    std::list<int> _list;
-    std::vector<int> _vector;
+template<typename T, typename S, typename V>
+void sort(int argc, char *argv[], T &container, S &conta, V &contb, std::string choice, bool flag, int tmp, bool print) {
+    struct timeval start, end; 
+    long sec, microsec;
+    (void) argv;
 
-    _vector = inputToVector(input);
+    gettimeofday(&start, NULL);
+    for(size_t i = 0; i < container.size(); i++) {
+        if (container[i].first > container[i].second)
+            std::swap(container[i].first, container[i].second);
+    }
+    for(size_t i = 0; i < container.size(); i++) {
+        conta.push_back(container[i].first);
+    }
+    for(size_t i = 0; i < container.size(); i++) {
+        contb.push_back(container[i].second);
+    }
+    std::sort(conta.begin(), conta.end());
 
-    sortVector(_vector, 0, _vector.size() - 1);
+    for (size_t i = 0; i < contb.size(); i++)
+        conta.insert(std::lower_bound(conta.begin(), conta.end(), contb[i]), contb[i]);
+    if (flag)
+        conta.insert(std::lower_bound(conta.begin(), conta.end(), tmp), tmp);
+    if(print) {
+        std::cout << "\nAfter : ";
+        for (size_t i = 0; i < conta.size(); i++) {
+            std::cout << conta[i] << " ";
+            if (i == 5 && conta.size() > 6) {
+                std::cout << "[...]";
+                break;
+            }
+                
+        }
+        std::cout << std::endl;
+            
+    }
+    gettimeofday(&end, NULL);
+    sec = end.tv_sec - start.tv_sec;
+    microsec = end.tv_usec - start.tv_usec;
+    long diff = (sec / 1000000) + (microsec);
+    std::cout << "Time to process a range of " << argc << " elements with " << choice << " : " << diff  << " us";
+    std::cout << std::endl;
+}
 
-    for (int num : _vector) {
-        std::cout << num << " ";
+int checkInputValid(const char *input) {
+    std::istringstream ss(input);
+    int nb;
+    ss >> nb;
+
+    if (ss.fail() || !ss.eof()) {
+        return -1;
+    }
+
+    if (nb < 0) {
+        return -1;
+    }
+
+    return nb;
+}
+
+void checkInput(int argc, char **argv, bool flag, std::string choice, int tmp) {
+    std::vector<std::pair<unsigned int, unsigned int> > _vector;
+    std::deque<std::pair<unsigned int, unsigned int> > _list;
+    int i = 1;
+    int tämp;
+    while (argv[i]) {
+        try {
+            int nb = checkInputValid(argv[i]);
+            if (nb == -1) 
+                throw InvalidInputException();
+            else
+                if (i % 2 == 0) {
+                    std::pair<unsigned int, unsigned int>newPair(nb, tämp);
+                    _vector.push_back(newPair);
+                    _list.push_back(newPair);
+                }    
+                else
+                    tämp = nb;
+                i++;
+        }
+        catch(std::exception &e) {
+            std::cout << e.what() << std::endl;
+            exit(0);
+        }
+    }
+    if (choice == "std::vector") {
+        std::vector<unsigned int> _vectora, _vectorb;
+        sort(argc, argv, _vector, _vectora, _vectorb, "std::vector", flag, tmp, true);
+    }
+    if (choice == "std::deque") {
+        std::deque<unsigned> _lista, _listb;
+        sort(argc, argv, _list, _lista, _listb, "std::deque", flag, tmp, false);
     }
 }
 
-std::vector<int> inputToVector(std::string input) {
-    std::istringstream iss(input);
-    std::vector<int> numbers;
-
-    int number;
-    while(iss >> number) {
-        numbers.push_back(number);
-    }
-    // for (int num : numbers) {
-    //     std::cout << num << " ";
-    // }
-    // std::cout << std::endl;
-    return numbers;
-}
-
-void sortVector(std::vector<int>& _vector, int const start, int const end) {
-    if (start >= end)
-        return;
-    
-    int mid = start + (end - start) / 2;
-
-        sortVector(_vector, start, mid);
-        sortVector(_vector, mid + 1, end);
-        mergeVector(_vector, start, mid, end);
-}
-
-void mergeVector(std::vector<int>& _vector, int const start, int const mid, int const end) {
-    int const n1 = mid - start + 1;
-    int const n2 = end - mid;
-
-    std::vector<int> startVec(n1);
-    std::vector<int> endVec(n2);
-
-    for (int i = 0; i < n1; i++) {
-        startVec[i] = _vector[start + i];
-    }
-    for (int j = 0; j < n2; j++) {
-        endVec[j] = _vector[mid + j];
-    }
-
-    int i = 0;
-    int j = 0;
-    int k = start;
-    while (i < n1 && j < n2) {
-        if (startVec[i] <= endVec[j]) 
-            _vector[k] = startVec[i++];   
-        else
-            _vector[k] = endVec[j++];
-        k++;
-    }
-    while (i < n1) {
-        _vector[k] = startVec[i];
-        i++;
-        k++;
-    }
-
-    while (j < n2) {
-        _vector[k] = startVec[j];
-        j++;
-        k++;
-    }
-}

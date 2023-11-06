@@ -11,12 +11,26 @@ std::map<std::string, double> readFile() {
         std::string date, rate;
         std::getline(ss, date, ',');
         std::getline(ss, rate, ',');
-        _data[date] = std::stod(rate);
+        _data[date] = atof(rate.c_str());
     }
     return _data;
 }
 
+void inputChecker(char* filename, std::map<std::string, double> _data);
 
+bool checkDateValid(const std::string& date);
+
+bool checkValueValid(const std::string& value);
+
+double getRate(std::string date, std::map<std::string, double> data);
+
+std::string getDayBefore(std::string& date);
+
+std::string intToString(int value) {
+    std::ostringstream oss;
+    oss << value;
+    return oss.str();
+}
 
 void inputChecker(char* filename, std::map<std::string, double> _data) {
     std::ifstream inputFile(filename);
@@ -24,11 +38,10 @@ void inputChecker(char* filename, std::map<std::string, double> _data) {
         std::cerr << "Error: The file provided can't be opened." << std::endl;
         exit(1);
     }
-    // std::cout << "File opened" << std::endl;
     std::string firstLine;
     std::getline(inputFile, firstLine);
-    if (!firstLine.compare("data | value")) {
-        std::cerr << "Error: The first line of the file provided doesent follow the 'date | value' - format " << std::endl;
+    if (firstLine != "date | value") {
+        std::cerr << "Error: The first line of the file provided doesn't follow the 'date | value' - format " << std::endl;
         exit(1);
     }
     std::string line;
@@ -36,67 +49,72 @@ void inputChecker(char* filename, std::map<std::string, double> _data) {
         std::istringstream iss(line);
         std::string date;
         std::string value;
-        char seperator;
-        if (!(iss >> date >> seperator >> value) || seperator != '|') {
+        char separator;
+        if (!(iss >> date >> separator >> value) || separator != '|') {
             std::cout << "Error: bad input => " << date << std::endl;
         }
-        else if (!(checkDateValid(date)) || !(checkValueValid(value))) ;
-        else if (stod(value) >= 0 || stod(value) <= 1000) { 
-            double prod = stod(value) * getRate(date, _data);
-            std::cout << date << " => " << value << " = " << prod << std::endl; 
+        else if (!checkDateValid(date) || !checkValueValid(value));
+        else if (atof(value.c_str()) >= 0 || atof(value.c_str()) <= 1000) {
+            double prod = atof(value.c_str()) * getRate(date, _data);
+            std::cout << date << " => " << value << " = " << prod << std::endl;
         }
         else
             std::cout << "Error: bad input => " << date << std::endl;
-    
+
     }
     inputFile.close();
 }
 
 bool checkDateValid(const std::string& date) {
+    if (date.size() != 10 || date[4] != '-' || date[7] != '-') {
+        std::cout << "Error: Wrong Date-Time Format" << std::endl;
+        return false;
+    }
+
     int year;
     int month;
     int day;
-    char seperator;
+    char separator1;
+    char separator2;
     std::istringstream ss(date);
-    ss >> year >> seperator >> month >> seperator >> day;
-    if (date.size() != 10)
-        std::cout << "Error: Date-format is worng: too short or too long!" << std::endl;
-    else if (!ss || seperator != '-')
+    ss >> year >> separator1 >> month >> separator2 >> day;
+
+    if (!ss || (separator1 != '-' || separator2 != '-')) {
         std::cout << "Error: Date-format is wrong" << std::endl;
-    else if ((year < 2009 || (day < 02 && month == 01 && year == 2009)) || (year = 2022 && day > 29 && month == 03))
+        return false;
+    }
+    if (date.size() != 10)
+        std::cout << "Error: Date-format is wrong: too short or too long!" << std::endl;
+    else if (!ss || (separator1 != '-' || separator2 != '-'))
+        std::cout << "Error: Date-format is wrong" << std::endl;
+    else if ((year < 2009 || (day < 2 && month == 1 && year == 2009)) || (year == 2022 && day > 29 && month == 3))
         std::cout << "Error: No Data found for this Date" << std::endl;
-    else if ((month < 01 || month > 12) || (day < 01 || day > 31))
+    else if ((month < 1 || month > 12) || (day < 1 || day > 31))
         std::cout << "Error: Not a Valid Date format" << std::endl;
-    else if (((month == 4) || (month == 6) || (month == 9) || (month == 11)) && day < 30) 
-        std::cout << "Error: April, June, September and November only have 30 days!" << std::endl;
-    else if (!(year % 4 == 0) && month == 02 && day > 28) 
+    else if (((month == 4) || (month == 6) || (month == 9) || (month == 11)) && day < 30)
+        std::cout << "Error: April, June, September, and November only have 30 days!" << std::endl;
+    else if (!(year % 4 == 0) && month == 2 && day > 28)
         std::cout << "Error: Date not Valid: Not a leap year" << std::endl;
-    else 
+    else
         return true;
     return false;
 }
 
 bool checkValueValid(const std::string& value) {
-    try {
-        std::stof(value);
-    }
-    catch (const std::invalid_argument& e) {
-        std::cout << e.what() << std::endl;
-        return false;
-    }
-    if (std::stod(value) < 0 ) 
+    double val = atof(value.c_str());
+    if (val < 0)
         std::cout << "Error: not a positive number." << std::endl;
-    else if (std::stod(value) > 1000)
+    else if (val > 1000)
         std::cout << "Error: too large a number." << std::endl;
     else
-        return true;      
+        return true;
     return false;
 }
 
 double getRate(std::string date, std::map<std::string, double> data) {
     std::map<std::string, double>::iterator it = data.find(date);
-    if (it != data.end()) 
-        return it->second;   
+    if (it != data.end())
+        return it->second;
     else {
         std::string dayBefore = getDayBefore(date);
         if (dayBefore.compare("not valid date") == 0) {
@@ -139,14 +157,14 @@ std::string getDayBefore(std::string& date) {
                 prev_day = 31;
         }
     }
-    std::string prev_date = std::to_string(prev_year) + "-";
+    std::string prev_date = intToString(prev_year) + "-";
     if (prev_month < 10)
-        prev_date += "0" + std::to_string(prev_month);
+        prev_date += "0" + intToString(prev_month);
     else
-        prev_date += std::to_string(prev_month);
+        prev_date += intToString(prev_month);
     if (prev_day < 10)
-        prev_date += "-0" + std::to_string(prev_day);
+        prev_date += "-0" + intToString(prev_day);
     else
-        prev_date += "-" + std::to_string(prev_day);
+        prev_date += "-" + intToString(prev_day);
     return (prev_date);
 }

@@ -17,11 +17,17 @@ void checkInput(std::string input) {
     std::stack<int> _stack;
     char op = 0;
     int nb = 0;
+    int ind = 0;
     int transform;
     for (size_t i = 0; i < input.length(); i++) {
         if (isdigit(input[i])) {
+            if (ind == 1)
+                throw InvalidInputTooBigException();
+            else {
                 transform = atoi(&input[i]);
                 _stack.push(transform);
+                ind = 1;
+            }
         }
         else if (isOperator(input[i])) {
             op = input[i];
@@ -29,10 +35,11 @@ void checkInput(std::string input) {
                 nb = _stack.top();
                 _stack.pop();
                 _stack.top() = calculateRpn(_stack.top(), nb, op);
+                ind = 0;
             }  
         }
-        else if (isspace(input[i])) {}
-        else 
+        else if (isspace(input[i])) { ind = 0;}
+        else
             throw InvalidInputException();
     }
     if (_stack.size() != 1)

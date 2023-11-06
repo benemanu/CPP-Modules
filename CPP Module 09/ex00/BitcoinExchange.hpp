@@ -4,20 +4,19 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <string>
-#include <exception>
 #include <map>
+#include <string>
+#include <cstdlib>
 #include <cmath>
-#include <ctime>
-#include <iomanip>
-#include <algorithm> 
-#include <cctype>
-#include <locale>
+#include <stdio.h>
+#include <stdlib.h>
 
-class InvalidInputException : public std::exception {
+
+class InvalidInputException : public std::runtime_error {
 public:
-    const char* what() const noexcept override {
-        return "The Input";
+    InvalidInputException() : std::runtime_error("error: Invalid Input\n") { }
+    virtual const char* what() const throw() {
+        return std::runtime_error::what();
     }
 };
 

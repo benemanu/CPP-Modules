@@ -3,7 +3,7 @@
 int main(int argc, char **argv) {
     if (argc != 2) {
         std::cout << "Error: Wrong Input, Need exactly 2 arguments!" << std::endl;
-        exit (1);
+        exit(EXIT_FAILURE);
     }
     try {
         checkInput(argv[1]);

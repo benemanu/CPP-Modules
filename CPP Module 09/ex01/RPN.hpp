@@ -7,6 +7,8 @@
 #include <iostream>
 #include <stdexcept>
 #include <sstream>
+#include <stdlib.h>
+
 
 class rpn {
     private: 
@@ -21,17 +23,28 @@ class rpn {
         int calculateRpn(int operand1, int operand2, char operatorr);
         bool isOperator(char c);
 
-class InvalidInputException : public std::exception {
+class InvalidInputException : public std::runtime_error {
 public:
-    const char* what() const noexcept override {
-        return "Invalid Input \n";
+    InvalidInputException() : std::runtime_error("error: Invalid Input \n") { }
+    virtual const char* what() const throw() {
+        return std::runtime_error::what();
     }
 };
 
-class InvalidStackException : public std::exception {
+
+class InvalidStackException : public std::runtime_error {
 public:
-    const char* what() const noexcept override {
-        return "Stack still has more than 1 value at the End \n";
+    InvalidStackException() : std::runtime_error("error: Stack still has more than 1 value at the End \n") { }
+    virtual const char* what() const throw() {
+        return std::runtime_error::what();
+    }
+};
+
+class InvalidInputTooBigException : public std::runtime_error {
+public:
+    InvalidInputTooBigException() : std::runtime_error("error: Invalid Input, only single digit numbers are allowed \n") { }
+    virtual const char* what() const throw() {
+        return std::runtime_error::what();
     }
 };
 
