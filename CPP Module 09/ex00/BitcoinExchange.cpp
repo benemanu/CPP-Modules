@@ -56,7 +56,7 @@ void inputChecker(char* filename, std::map<std::string, double> _data) {
         else if (!checkDateValid(date) || !checkValueValid(value));
         else if (atof(value.c_str()) >= 0 || atof(value.c_str()) <= 1000) {
             double prod = atof(value.c_str()) * getRate(date, _data);
-            std::cout << date << " => " << value << " = " << prod << std::endl;
+            std::cout << std::fixed << date << " => " << value << " = " << prod << std::endl;
         }
         else
             std::cout << "Error: bad input => " << date << std::endl;
@@ -91,7 +91,7 @@ bool checkDateValid(const std::string& date) {
         std::cout << "Error: No Data found for this Date" << std::endl;
     else if ((month < 1 || month > 12) || (day < 1 || day > 31))
         std::cout << "Error: Not a Valid Date format" << std::endl;
-    else if (((month == 4) || (month == 6) || (month == 9) || (month == 11)) && day < 30)
+    else if (((month == 4) || (month == 6) || (month == 9) || (month == 11)) && day > 30)
         std::cout << "Error: April, June, September, and November only have 30 days!" << std::endl;
     else if (!(year % 4 == 0) && month == 2 && day > 28)
         std::cout << "Error: Date not Valid: Not a leap year" << std::endl;
@@ -102,13 +102,33 @@ bool checkDateValid(const std::string& date) {
 
 bool checkValueValid(const std::string& value) {
     double val = atof(value.c_str());
-    if (val < 0)
+    if (val < 0) {
         std::cout << "Error: not a positive number." << std::endl;
-    else if (val > 1000)
+        return false;
+    }
+    else if (val > 1000) {
         std::cout << "Error: too large a number." << std::endl;
-    else
-        return true;
-    return false;
+        return false;
+    }
+    std::istringstream ss(value);
+    double rateValue;
+    char remaining;
+
+    if (!(ss >> rateValue)) {
+        std::cout << "Error: not a valid Double" << std::endl;
+        return false;
+    }
+
+    if (ss >> remaining) {
+        std::cout << "Error: not a valid Double" << std::endl;
+        return false;
+    }
+
+    if (value == "nan" || value == "inf" || value == "-inf" || value == "+inf") {
+        std::cout << "Error: not a valid Double" << std::endl;
+        return false;
+    }
+    return true;
 }
 
 double getRate(std::string date, std::map<std::string, double> data) {

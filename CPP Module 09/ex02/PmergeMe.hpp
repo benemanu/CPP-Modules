@@ -11,7 +11,7 @@
 #include <sstream>
 
 void checkInput(int argc, char **argv, bool flag, std::string choice, int tmp);
-int checkInputValid(const char *input);
+int checkInputValid(const char *input); 
 
 class InvalidInputException : public std::runtime_error {
 public:

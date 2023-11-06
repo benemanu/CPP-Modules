@@ -10,7 +10,7 @@
 #include <cmath>
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <ios>
 
 class InvalidInputException : public std::runtime_error {
 public:
@@ -26,6 +26,5 @@ double getRate(std::string date, std::map<std::string, double> data);
 std::string getDayBefore(std::string& date);
 bool checkValueValid(const std::string &value);
 bool checkDateValid(const std::string &date);
-std::string trim(const std::string& str);
 
 #endif
